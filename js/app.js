@@ -3,8 +3,62 @@ var cgCards = ['1h','1d','1c','1s','2h','2d','2c','2s','3h','3d','3c','3s','4h',
 //define two empty table for cards of the player and the GM
 var PlayerCards = [];
 var GmCards = [];
-//
-
+//Define value for each cards
+function CardsValue() {
+  cgCards['2h'] = 2;
+  cgCards['2d'] = 2;
+  cgCards['2c'] = 2;
+  cgCards['2s'] = 2;
+  cgCards['3h'] = 3;
+  cgCards['3d'] = 3;
+  cgCards['3c'] = 3;
+  cgCards['3s'] = 3;
+  cgCards['4h'] = 4;
+  cgCards['4d'] = 4;
+  cgCards['4c'] = 4;
+  cgCards['4s'] = 4;
+  cgCards['5h'] = 5;
+  cgCards['5d'] = 5;
+  cgCards['5c'] = 5;
+  cgCards['5s'] = 5;
+  cgCards['6h'] = 6;
+  cgCards['6d'] = 6;
+  cgCards['6c'] = 6;
+  cgCards['6s'] = 6;
+  cgCards['7h'] = 7;
+  cgCards['7d'] = 7;
+  cgCards['7c'] = 7;
+  cgCards['7s'] = 7;
+  cgCards['8h'] = 8;
+  cgCards['8d'] = 8;
+  cgCards['8c'] = 8;
+  cgCards['8s'] = 8;
+  cgCards['9h'] = 9;
+  cgCards['9d'] = 9;
+  cgCards['9c'] = 9;
+  cgCards['9s'] = 9;
+  cgCards['10h'] = 10;
+  cgCards['10d'] = 10;
+  cgCards['10c'] = 10;
+  cgCards['10s'] = 10;
+  cgCards['Vh'] = 10;
+  cgCards['Vd'] = 10;
+  cgCards['Vc'] = 10;
+  cgCards['Vs'] = 10;
+  cgCards['Qh'] = 10;
+  cgCards['Qd'] = 10;
+  cgCards['Qc'] = 10;
+  cgCards['Qs'] = 10;
+  cgCards['Kh'] = 10;
+  cgCards['Kd'] = 10;
+  cgCards['Kc'] = 10;
+  cgCards['Ks'] = 10;
+  cgCards['1h'] = 11;
+  cgCards['1d'] = 11;
+  cgCards['1c'] = 11;
+  cgCards['1s'] = 11;
+}
+CardsValue()
 
 //Function to get a random card
 function RandomCard() {
