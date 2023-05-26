@@ -13,18 +13,25 @@
   </header>
   <section>
     
-    <!--Bouton Jouer-->
-    <button id="play" type="button">Lancer une partie</button>
-    <button id="draw" type="button">Piocher une carte</button>
+    
 
     <!--Plateau-->
     <div>
+      <!--Bouton Jouer-->
+      <button id="play" type="button">Lancer une partie</button>
+      <button id="draw" type="button">Piocher une carte</button>
+      <!--Score-->
+      <div class="scoreDiv" style="display: flex;align-items: center;gap: 5px;">
+        <p>Score :</p>
+        <span id="score"></span>
+      </div>
+
       <!--Main Croupier-->
-      <div class="gm">
+      <div id="gm">
 
       </div>
       <!--Main Joueur-->
-      <div class="player">
+      <div id="player">
         
       </div>
     </div>
