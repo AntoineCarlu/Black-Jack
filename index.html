@@ -19,11 +19,19 @@
     <div>
       <!--Bouton Jouer-->
       <button id="play" type="button">Lancer une partie</button>
-      <button id="draw" type="button">Piocher une carte</button>
+      <button id="draw" type="button" disabled>Piocher une carte</button>
+      <button id="stop" type="button" disabled>Arrêter de piocher</button>
       <!--Score-->
       <div class="scoreDiv" style="display: flex;align-items: center;gap: 5px;">
-        <p>Score :</p>
+        <p>Score Joueur :</p>
         <span id="score"></span>
+        <br><br>
+        <p>Score Croupier : </p>
+        <span id="scoreGm"></span>
+      </div>
+      <!--Reset-->
+      <div id="reset" style="display: flex;align-items: center;gap: 5px;">
+
       </div>
 
       <!--Main Croupier-->
