@@ -13,10 +13,11 @@ var scoreIndexGm = 0;
 var j = 0;
 var jGm = 0;
 var maxScore = 21;
+var GmHitRule = maxScore-3;
 //define buttons
 const buttonPlay = document.getElementById("play");
-const buttonDraw = document.getElementById("draw");
-const buttonStop = document.getElementById("stop");
+const buttonDraw = document.getElementById("hit");
+const buttonStop = document.getElementById("stand");
 //Define value for each cards
 var CardsValues = {
   '2h': 2,
@@ -131,7 +132,6 @@ function LooseScenario() {
   var buttonReset = document.createElement('button');
   if (scoreValue > maxScore) {looseText.textContent = "Vous avez perdu ! Votre main est supérieur au score maximum ("+maxScore+").";}
   else if (scoreValue < scoreValueGm) {looseText.textContent = "Vous avez perdu ! Votre main est inférieur à celle du Croupier.";}
-  else if (scoreValue == scoreValueGm) {looseText.textContent = "Vous avez perdu ! La main du Croupier égalise votre main.";}
   else {looseText.textContent = "Erreur";}
   buttonReset.textContent = "Rejouer";
   resetDiv.appendChild(looseText);
@@ -161,6 +161,7 @@ function WinScenario() {
   var buttonReset = document.createElement('button');
   if (scoreValue > scoreValueGm) {winText.textContent = "Vous avez gagné ! Votre main est supérieur à celle du Croupier.";}
   else if (scoreValueGm > maxScore) {winText.textContent = "Vous avez gagné ! La main du Croupier est supérieur au score maximum ("+maxScore+").";}
+  else if (scoreValue == scoreValueGm) {winText.textContent = "Égalité ! La main du Croupier égalise votre main.";}
   else {winText.textContent = "Erreur";}
   buttonReset.textContent = "Rejouer";
   resetDiv.appendChild(winText);
@@ -180,7 +181,7 @@ function WinScenario() {
 }
 
 
-//Event to launch game when player click on the button start
+//Event to launch game when player click on the button play
 document.getElementById("play").addEventListener('click', PlayGame);
 function PlayGame() {
     console.clear();
@@ -190,11 +191,10 @@ function PlayGame() {
   buttonStop.disabled = false;
   buttonDraw.disabled = false;
 
-  //Give two random cards to the player and GM
-  for (var i = 0; i<2; i++) {
-    NewCardPlayer();
-    NewCardGm();
-  }
+  //Give two random cards to the player and one to the GM
+  NewCardPlayer();
+  NewCardPlayer();
+  NewCardGm();
   //modify score value
   PlayerHandValue();
   GmHandValue();
@@ -209,9 +209,9 @@ function PlayGame() {
 }
 
 //Event to draw cards to add them to the hand of the player
-document.getElementById("draw").addEventListener('click', DrawCard);
+document.getElementById("hit").addEventListener('click', DrawCard);
 function DrawCard() {
-    console.log('Draw Player')
+    console.log('HIT')
   //give one random card to the hand and modify score value
   NewCardPlayer();
   PlayerHandValue();
@@ -228,9 +228,9 @@ function DrawCard() {
 }
 
 //Event when player stop drawing cards to let the Gm draw
-document.getElementById("stop").addEventListener('click', DrawGmCard);
+document.getElementById("stand").addEventListener('click', DrawGmCard);
 function DrawGmCard() {
-    console.log('Draw GM')
+    console.log('STAND')
   //disable buttons to play
   buttonPlay.disabled = true;
   buttonDraw.disabled = true;
@@ -239,9 +239,9 @@ function DrawGmCard() {
   if (scoreValue < scoreValueGm) {
     LooseScenario();
   }
-  //Gm draw cards until get more score value than the player
+  //Gm draw cards until get more score value than the GmHitRule value
   else if (scoreValue >= scoreValueGm) {
-    while (scoreValue > scoreValueGm) {
+    while (scoreValueGm < GmHitRule) {
       NewCardGm();
       GmHandValue();
       scoreGm.innerHTML = scoreValueGm;
@@ -253,13 +253,17 @@ function DrawGmCard() {
     if (scoreValueGm > maxScore) {
       WinScenario();
     }
+    //Win scenario if score value of the player is higher than Gm score value
+    else if (scoreValue > scoreValueGm) {
+      WinScenario();
+    }
     //Loose scenario if score value of the Gm is higher than player score value
     else if (scoreValueGm > scoreValue) {
       LooseScenario();
     }
     //Loose scenario if scores values are the same
     else if (scoreValueGm == scoreValue) {
-      LooseScenario();
+      WinScenario();
     }
     //Error message if womething goes wrong
     else {
