@@ -12,10 +12,17 @@ var scoreIndex = 0;
 var scoreIndexGm = 0; 
 var j = 0;
 var jGm = 0;
+//define bets
+const credits = document.getElementById("credits");
+var Credits = 500;
+credits.innerHTML = Credits;
+var actualBet = 0;
+//define settings variables
 var maxScore = 21;
 var GmHitRule = maxScore-4;
 //define buttons
 const buttonPlay = document.getElementById("play");
+const buttonBet = document.getElementById("bet");
 const buttonDraw = document.getElementById("hit");
 const buttonStop = document.getElementById("stand");
 //Define value for each cards
@@ -181,6 +188,12 @@ function WinScenario() {
 }
 
 
+//Event to bet credits for the game
+document.getElementById("bet").addEventListener('click', BetCredits);
+function BetCredits() {
+
+}
+
 //Event to launch game when player click on the button play
 document.getElementById("play").addEventListener('click', PlayGame);
 function PlayGame() {
@@ -277,6 +290,7 @@ function DrawGmCard() {
 
 
 //Events to change settings
+//score max to 31
 document.getElementById("31").addEventListener('change', function() {
   if (maxScore == 21) {
     maxScore = 31;
@@ -296,7 +310,8 @@ document.getElementById("31").addEventListener('change', function() {
     console.log('Une erreur a été produite dans les conditions ligne 281.');
   }
 })
-document.getElementById("18").addEventListener('change', function() {
+//hit on 17
+document.getElementById("hit17").addEventListener('change', function() {
   if (GmHitRule == maxScore-4) {
     GmHitRule = maxScore-3;
     console.log('Le Croupier tire à ',GmHitRule-1);
