@@ -14,9 +14,11 @@ var j = 0;
 var jGm = 0;
 //define bets
 const credits = document.getElementById("credits");
+const actualbet = document.getElementById("actualbet");
 var Credits = 500;
-credits.innerHTML = Credits;
 var actualBet = 0;
+credits.innerHTML = Credits;
+actualbet.innerHTML = actualBet;
 //define settings variables
 var maxScore = 21;
 var GmHitRule = maxScore-4;
@@ -94,6 +96,8 @@ function DefaultValues() {
   scoreIndexGm = 0;
   j = 0;
   jGm = 0;
+  actualBet = 0;
+  actualbet.innerHTML = actualBet;
 }
 //Function to get the value of the hands
 function PlayerHandValue() {
@@ -133,10 +137,10 @@ function LooseScenario() {
   buttonPlay.disabled = true;
   buttonDraw.disabled = true;
   buttonStop.disabled = true;
-  //create elements to show loose text and reset game
-  var resetDiv = document.getElementById("reset");
-  var looseText = document.createElement('p');
-  var buttonReset = document.createElement('button');
+  //Create elements to show loose text and reset game
+  const resetDiv = document.getElementById("reset");
+  const looseText = document.createElement('p');
+  const buttonReset = document.createElement('button');
   if (scoreValue > maxScore) {looseText.textContent = "Vous avez perdu ! Votre main est supérieur au score maximum ("+maxScore+").";}
   else if (scoreValue < scoreValueGm) {looseText.textContent = "Vous avez perdu ! Votre main est inférieur à celle du Croupier.";}
   else {looseText.textContent = "Erreur";}
@@ -157,15 +161,15 @@ function LooseScenario() {
   }
 }
 function WinScenario() {
-  console.log('Gagné !');
+    console.log('Gagné !');
   //disable buttons to play
   buttonPlay.disabled = true;
   buttonDraw.disabled = true;
   buttonStop.disabled = true;
-  //create elements to show win text and reset game
-  var resetDiv = document.getElementById("reset");
-  var winText = document.createElement('p');
-  var buttonReset = document.createElement('button');
+  //Create elements to show win text and reset game
+  const resetDiv = document.getElementById("reset");
+  const winText = document.createElement('p');
+  const buttonReset = document.createElement('button');
   if (scoreValue > scoreValueGm) {winText.textContent = "Vous avez gagné ! Votre main est supérieur à celle du Croupier.";}
   else if (scoreValueGm > maxScore) {winText.textContent = "Vous avez gagné ! La main du Croupier est supérieur au score maximum ("+maxScore+").";}
   else if (scoreValue == scoreValueGm) {winText.textContent = "Égalité ! La main du Croupier égalise votre main.";}
@@ -188,37 +192,90 @@ function WinScenario() {
 }
 
 
-//Event to bet credits for the game
-document.getElementById("bet").addEventListener('click', BetCredits);
-function BetCredits() {
-
-}
-
 //Event to launch game when player click on the button play
 document.getElementById("play").addEventListener('click', PlayGame);
 function PlayGame() {
     console.clear();
   //clear the cards, hands and score when start new game
   DefaultValues();
-  //active buttons to play
-  buttonStop.disabled = false;
-  buttonDraw.disabled = false;
+  //active buttons to bet
+  buttonBet.disabled = false;
+}
 
-  //Give two random cards to the player and one to the GM
-  NewCardPlayer();
-  NewCardPlayer();
-  NewCardGm();
-  //modify score value
-  PlayerHandValue();
-  GmHandValue();
-  score.innerHTML = scoreValue;
-  scoreGm.innerHTML = scoreValueGm;
+//Event to bet credits for the game and after start the game
+document.getElementById("bet").addEventListener('click', BetCredits);
+function BetCredits() {
+  //disable button bet to prevent succesive create elements
+  buttonBet.disabled = true;
+  //Create elements to bet credits for a game
+  const betDiv = document.getElementById("betDiv");
+  const betInput = document.createElement('input');
+  const betSubmit = document.createElement('button');
+  const betError = document.createElement('label');
+  //details of elements created
+  betInput.type = "number";
+  betInput.min = "10";
+  betInput.max = Credits;
+  betInput.step = "10";
+  betInput.placeholder = "Entrez votre mise";
+  betSubmit.type = "button";
+  betSubmit.innerHTML = "Ok";
+  betDiv.appendChild(betInput);
+  betDiv.appendChild(betSubmit);
+  betDiv.appendChild(betError);
 
-  //console infos
-  console.log('Cartes du joueur : ',PlayerCards);
-  console.log('Cartes du GM :',GmCards);
-  console.log('Score du joueur :',scoreValue);
-  console.log('Score du GM :',scoreValueGm);
+
+  //Event to save the bet when click on the button submit
+  betSubmit.addEventListener('click', function() {
+    //List of conditions to prevent the player to bet an incorrect bet
+    if (betInput.value < 10) {
+        console.log('Valeur de mise incorrect.')
+      betError.innerHTML = "Misez entre 10 et "+Credits;
+    }
+    else if (betInput.value > Credits) {
+        console.log('Valeur de mise incorrect.')
+      betError.innerHTML = "Misez entre 10 et "+Credits;
+    }
+    //Continue game if bet is valid
+    else if (betInput.value <= Credits && betInput.value >= 10) {
+      actualBet = betInput.value;
+      actualbet.innerHTML = actualBet;
+        console.log('Votre mise :',actualBet)
+      //remove bet system to start a game
+      betInput.remove();
+      betSubmit.remove();
+      betError.remove();
+      //active buttons to play
+      buttonStop.disabled = false;
+      buttonDraw.disabled = false;
+  
+      //Give two random cards to the player and one to the GM
+      NewCardPlayer();
+      NewCardPlayer();
+      NewCardGm();
+      //modify score value
+      PlayerHandValue();
+      GmHandValue();
+      score.innerHTML = scoreValue;
+      scoreGm.innerHTML = scoreValueGm;
+  
+      //console infos
+      console.log('Cartes du joueur : ',PlayerCards);
+      console.log('Cartes du GM :',GmCards);
+      console.log('Score du joueur :',scoreValue);
+      console.log('Score du GM :',scoreValueGm);
+    }
+    else {
+      console.log('Une erreur a été produite dans les conditions ligne X.')
+    }
+    
+  })
+  //Event to remove bet system if player click on play button again
+  document.getElementById("play").addEventListener('click', function() {
+    betInput.remove();
+    betSubmit.remove();
+    betError.remove();
+  })
 }
 
 //Event to draw cards to add them to the hand of the player
