@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mini-game Black Jack en ligne">
   <link rel="stylesheet" href="css/style.css">
-  <title>Jeu de Black Jack</title>
+  <title>Black Jack Game</title>
 </head>
 <body>
   <header>
@@ -17,7 +18,7 @@
 
     <!--Plateau-->
     <div>
-      <!--Bouton Jouer-->
+      <!--Boutons Jouer-->
       <button id="play" type="button">Lancer une partie</button>
       <button id="hit" type="button" disabled>Piocher une carte</button>
       <button id="stand" type="button" disabled>Arrêter de piocher</button>
@@ -28,6 +29,10 @@
         <br><br>
         <p>Score Croupier : </p>
         <span id="scoreGm"></span>
+      </div>
+      <div>
+        <input id="31" type="checkbox"><label for="31">Score maximum à 31</label> 
+        <input id="18" type="checkbox"><label for="18">Le Croupier tire à 17</label> 
       </div>
       <!--Reset-->
       <div id="reset" style="display: flex;align-items: center;gap: 5px;">

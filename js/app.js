@@ -13,7 +13,7 @@ var scoreIndexGm = 0;
 var j = 0;
 var jGm = 0;
 var maxScore = 21;
-var GmHitRule = maxScore-3;
+var GmHitRule = maxScore-4;
 //define buttons
 const buttonPlay = document.getElementById("play");
 const buttonDraw = document.getElementById("hit");
@@ -261,16 +261,51 @@ function DrawGmCard() {
     else if (scoreValueGm > scoreValue) {
       LooseScenario();
     }
-    //Loose scenario if scores values are the same
+    //Egality scenario if scores values are the same
     else if (scoreValueGm == scoreValue) {
       WinScenario();
     }
-    //Error message if womething goes wrong
+    //Error message if something goes wrong
     else {
-      console.log('Une erreur a été produite dans la boucle ligne 212.');
+      console.log('Une erreur a été produite dans les conditions ligne 253.');
     }
   }
   else {
-    console.log('Une erreur a été produite dans les conditions ligne 236.');
+    console.log('Une erreur a été produite dans les conditions ligne 239.');
   }
 }
+
+
+//Events to change settings
+document.getElementById("31").addEventListener('change', function() {
+  if (maxScore == 21) {
+    maxScore = 31;
+    if (GmHitRule == 17) {GmHitRule = maxScore-4;}
+    else if (GmHitRule == 18) {GmHitRule = maxScore-3;}
+    else {console.log('Une erreur a été produite dans les conditions ligne 283.');}
+    console.log('Score max changé à ',maxScore);
+  }
+  else if (maxScore == 31) {
+    maxScore = 21;
+    if (GmHitRule == 27) {GmHitRule = maxScore-4;}
+    else if (GmHitRule == 28) {GmHitRule = maxScore-3;}
+    else {console.log('Une erreur a été produite dans les conditions ligne 290.');}
+    console.log('Score max changé à ',maxScore);
+  }
+  else {
+    console.log('Une erreur a été produite dans les conditions ligne 281.');
+  }
+})
+document.getElementById("18").addEventListener('change', function() {
+  if (GmHitRule == maxScore-4) {
+    GmHitRule = maxScore-3;
+    console.log('Le Croupier tire à ',GmHitRule-1);
+  }
+  else if (GmHitRule == maxScore-3) {
+    GmHitRule = maxScore-4;
+    console.log('Le Croupier tire à ',GmHitRule-1);
+  }
+  else {
+    console.log('Une erreur a été produite dans les conditions ligne 300.');
+  }
+})
