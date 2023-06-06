@@ -29,58 +29,7 @@ const buttonDraw = document.getElementById("hit");
 const buttonStop = document.getElementById("stand");
 //Define value for each cards
 var CardsValues = {
-  '2h': 2,
-  '2d': 2,
-  '2c': 2,
-  '2s': 2,
-  '3h': 3,
-  '3d': 3,
-  '3c': 3,
-  '3s': 3,
-  '4h': 4,
-  '4d': 4,
-  '4c': 4,
-  '4s': 4,
-  '5h': 5,
-  '5d': 5,
-  '5c': 5,
-  '5s': 5,
-  '6h': 6,
-  '6d': 6,
-  '6c': 6,
-  '6s': 6,
-  '7h': 7,
-  '7d': 7,
-  '7c': 7,
-  '7s': 7,
-  '8h': 8,
-  '8d': 8,
-  '8c': 8,
-  '8s': 8,
-  '9h': 9,
-  '9d': 9,
-  '9c': 9,
-  '9s': 9,
-  '10h': 10,
-  '10d': 10,
-  '10c': 10,
-  '10s': 10,
-  'Vh': 10,
-  'Vd': 10,
-  'Vc': 10,
-  'Vs': 10,
-  'Qh': 10,
-  'Qd': 10,
-  'Qc': 10,
-  'Qs': 10,
-  'Kh': 10,
-  'Kd': 10,
-  'Kc': 10,
-  'Ks': 10,
-  '1h': 11,
-  '1d': 11,
-  '1c': 11,
-  '1s': 11,
+  '2h': 2,'2d': 2,'2c': 2,'2s': 2,'3h': 3,'3d': 3,'3c': 3,'3s': 3,'4h': 4,'4d': 4,'4c': 4,'4s': 4,'5h': 5,'5d': 5,'5c': 5,'5s': 5,'6h': 6,'6d': 6,'6c': 6,'6s': 6,'7h': 7,'7d': 7,'7c': 7,'7s': 7,'8h': 8,'8d': 8,'8c': 8,'8s': 8,'9h': 9,'9d': 9,'9c': 9,'9s': 9,'10h': 10,'10d': 10,'10c': 10,'10s': 10,'Vh': 10,'Vd': 10,'Vc': 10,'Vs': 10,'Qh': 10,'Qd': 10,'Qc': 10,'Qs': 10,'Kh': 10,'Kd': 10,'Kc': 10,'Ks': 10,'1h': 11,'1d': 11,'1c': 11,'1s': 11,
 }
 
 //Function to reset values of variables
@@ -130,6 +79,7 @@ function NewCardGm() {
   cgCards.splice(randomCard, 1); //same as the top
   GmCards.push(GmCard); //same as the top
 }
+
 //Function to show loose or win texts, and reset game
 function LooseScenario() {
     console.log('Perdu !');
@@ -266,7 +216,7 @@ function BetCredits() {
       console.log('Score du GM :',scoreValueGm);
     }
     else {
-      console.log('Une erreur a été produite dans les conditions ligne X.')
+      throw new Error('Une erreur a été produite dans la liste de conditions.');
     }
     
   })
@@ -319,8 +269,15 @@ function DrawGmCard() {
       console.log('Cartes du GM : ',GmCards);
       console.log('Score du GM :',scoreValueGm);
     }
+    //Check if something is suspicious in variables
+    if (scoreValue > 31) {
+      location.reload();
+    }
+    else if (maxScore > 21 && (GmHitRule == 17||GmHitRule == 18)) {
+      location.reload();
+    }
     //Win scenario if score value of the Gm is higher than maxScore value
-    if (scoreValueGm > maxScore) {
+    else if (scoreValueGm > maxScore) {
       WinScenario();
     }
     //Win scenario if score value of the player is higher than Gm score value
@@ -337,11 +294,11 @@ function DrawGmCard() {
     }
     //Error message if something goes wrong
     else {
-      console.log('Une erreur a été produite dans les conditions ligne 253.');
+      throw new Error('Une erreur a été produite dans la liste de conditions.');
     }
   }
   else {
-    console.log('Une erreur a été produite dans les conditions ligne 239.');
+    throw new Error('Une erreur a été produite dans la liste de conditions.');
   }
 }
 
@@ -353,18 +310,18 @@ document.getElementById("31").addEventListener('change', function() {
     maxScore = 31;
     if (GmHitRule == 17) {GmHitRule = maxScore-4;}
     else if (GmHitRule == 18) {GmHitRule = maxScore-3;}
-    else {console.log('Une erreur a été produite dans les conditions ligne 283.');}
+    else {throw new Error('Une erreur a été produite dans la liste de conditions.');}
     console.log('Score max changé à ',maxScore);
   }
   else if (maxScore == 31) {
     maxScore = 21;
     if (GmHitRule == 27) {GmHitRule = maxScore-4;}
     else if (GmHitRule == 28) {GmHitRule = maxScore-3;}
-    else {console.log('Une erreur a été produite dans les conditions ligne 290.');}
+    else {throw new Error('Une erreur a été produite dans la liste de conditions.');}
     console.log('Score max changé à ',maxScore);
   }
   else {
-    console.log('Une erreur a été produite dans les conditions ligne 281.');
+    throw new Error('Une erreur a été produite dans la liste de conditions.');
   }
 })
 //hit on 17
@@ -378,6 +335,6 @@ document.getElementById("hit17").addEventListener('change', function() {
     console.log('Le Croupier tire à ',GmHitRule-1);
   }
   else {
-    console.log('Une erreur a été produite dans les conditions ligne 300.');
+    throw new Error('Une erreur a été produite dans la liste de conditions.');
   }
 })
