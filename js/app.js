@@ -148,6 +148,8 @@ function WinScenario() {
 document.getElementById("play").addEventListener('click', PlayGame);
 function PlayGame() {
     console.clear();
+  buttonDraw.disabled = true;
+  buttonStop.disabled = true;
   //clear the cards, hands and score when start new game
   DefaultValues();
   //active buttons to bet

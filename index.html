@@ -11,28 +11,33 @@
 <body>
   <header>
 
+    <!--Crédits-->
+    <div class="creditsDiv" style="display: flex;align-items: center;gap: 5px;">
+      <p>Crédits :</p>
+      <span id="credits"></span>
+      <p>Mise actuel :</p>
+      <span id="actualbet"></span>
+    </div>
+    <!--Bet-->
+    <div id="betDiv">
+
+    </div>
+    <!--Boutons Jouer-->
+    <button id="play" type="button">Lancer une partie</button>
+    <button id="bet" type="button" disabled>Miser une somme</button>
+
   </header>
   <section>
     
-    
-
     <!--Plateau-->
     <div>
-      <div class="creditsDiv" style="display: flex;align-items: center;gap: 5px;">
-        <p>Crédits :</p>
-        <span id="credits"></span>
-        <p>Mise actuel :</p>
-        <span id="actualbet"></span>
+      <!--Rules-->
+      <div>
+        <p>Options et règles</p>
+        <input id="31" type="checkbox"><label for="31">Score maximum à 31</label>
+        <input id="hit17" type="checkbox"><label for="hit17">Le Croupier tire à 17</label>
       </div>
-      <!--Boutons Jouer-->
-      <button id="play" type="button">Lancer une partie</button>
-      <button id="bet" type="button" disabled>Miser une somme</button>
-      <button id="hit" type="button" disabled>Piocher une carte</button>
-      <button id="stand" type="button" disabled>Arrêter de piocher</button>
-      <!--Bet-->
-      <div id="betDiv">
 
-      </div>
       <!--Score-->
       <div class="scoreDiv" style="display: flex;align-items: center;gap: 5px;">
         <p>Score Joueur :</p>
@@ -40,12 +45,6 @@
         <br><br>
         <p>Score Croupier : </p>
         <span id="scoreGm"></span>
-      </div>
-      <!--Rules-->
-      <div>
-        <p>Options et règles</p>
-        <input id="31" type="checkbox"><label for="31">Score maximum à 31</label> 
-        <input id="hit17" type="checkbox"><label for="hit17">Le Croupier tire à 17</label> 
       </div>
       <!--Reset-->
       <div id="reset" style="display: flex;align-items: center;gap: 5px;">
@@ -60,10 +59,12 @@
       <div id="player">
         
       </div>
+      <!--Boutons Partie-->
+      <button id="hit" type="button" disabled>Piocher une carte</button>
+      <button id="stand" type="button" disabled>Arrêter de piocher</button>
     </div>
   
   </section>
-
   <!--Integration of the JavaScript-->
   <script src="js/app.js"></script>
 </body>
