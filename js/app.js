@@ -91,12 +91,13 @@ function LooseScenario() {
   const resetDiv = document.getElementById("reset");
   const looseText = document.createElement('p');
   const buttonReset = document.createElement('button');
-  if (scoreValue > maxScore) {looseText.textContent = "Vous avez perdu ! Votre main est supérieur au score maximum ("+maxScore+").";}
-  else if (scoreValue < scoreValueGm) {looseText.textContent = "Vous avez perdu ! Votre main est inférieur à celle du Croupier.";}
+  if (scoreValue > maxScore) {looseText.textContent = "Vous avez perdu ! Votre main est supérieur au score maximum ("+maxScore+")."; Credits = parseInt(Credits) - parseInt(actualBet);}
+  else if (scoreValue < scoreValueGm) {looseText.textContent = "Vous avez perdu ! Votre main est inférieur à celle du Croupier."; Credits = parseInt(Credits) - parseInt(actualBet);}
   else {looseText.textContent = "Erreur";}
   buttonReset.textContent = "Rejouer";
   resetDiv.appendChild(looseText);
   resetDiv.appendChild(buttonReset);
+  credits.innerHTML = Credits;
 
   //Reset game if click on reset button
   buttonReset.addEventListener('click', ResetGame);
@@ -120,13 +121,14 @@ function WinScenario() {
   const resetDiv = document.getElementById("reset");
   const winText = document.createElement('p');
   const buttonReset = document.createElement('button');
-  if (scoreValue > scoreValueGm) {winText.textContent = "Vous avez gagné ! Votre main est supérieur à celle du Croupier.";}
-  else if (scoreValueGm > maxScore) {winText.textContent = "Vous avez gagné ! La main du Croupier est supérieur au score maximum ("+maxScore+").";}
+  if (scoreValue > scoreValueGm) {winText.textContent = "Vous avez gagné ! Votre main est supérieur à celle du Croupier."; Credits = parseInt(Credits) + parseInt(actualBet);}
+  else if (scoreValueGm > maxScore) {winText.textContent = "Vous avez gagné ! La main du Croupier est supérieur au score maximum ("+maxScore+")."; Credits = parseInt(Credits) + parseInt(actualBet);}
   else if (scoreValue == scoreValueGm) {winText.textContent = "Égalité ! La main du Croupier égalise votre main.";}
   else {winText.textContent = "Erreur";}
   buttonReset.textContent = "Rejouer";
   resetDiv.appendChild(winText);
   resetDiv.appendChild(buttonReset);
+  credits.innerHTML = Credits;
 
   //Reset game if click on reset button
   buttonReset.addEventListener('click', ResetGame);
@@ -149,7 +151,9 @@ function PlayGame() {
   //clear the cards, hands and score when start new game
   DefaultValues();
   //active buttons to bet
-  buttonBet.disabled = false;
+  if (Credits >= 10) {buttonBet.disabled = false;}
+  else if (Credits < 10) {buttonPlay.disabled = true; window.alert('Vous n\'avez plus assez de crédits pour jouer !');}
+  else {throw new Error('Une erreur a été produite dans la liste de conditions.');}
 }
 
 //Event to bet credits for the game and after start the game
@@ -191,6 +195,7 @@ function BetCredits() {
       actualBet = betInput.value;
       actualbet.innerHTML = actualBet;
         console.log('Votre mise :',actualBet)
+
       //remove bet system to start a game
       betInput.remove();
       betSubmit.remove();
@@ -215,9 +220,7 @@ function BetCredits() {
       console.log('Score du joueur :',scoreValue);
       console.log('Score du GM :',scoreValueGm);
     }
-    else {
-      throw new Error('Une erreur a été produite dans la liste de conditions.');
-    }
+    else {throw new Error('Une erreur a été produite dans la liste de conditions.');}
     
   })
   //Event to remove bet system if player click on play button again
@@ -255,51 +258,40 @@ function DrawGmCard() {
   buttonPlay.disabled = true;
   buttonDraw.disabled = true;
   buttonStop.disabled = true;
-  //Loose scenario if score of player is inferior to the Gm score value
-  if (scoreValue < scoreValueGm) {
+  //Gm draw cards until get more score value than the GmHitRule value
+  while (scoreValueGm < GmHitRule) {
+    NewCardGm();
+    GmHandValue();
+    scoreGm.innerHTML = scoreValueGm;
+    //console infos
+    console.log('Cartes du GM : ', GmCards);
+    console.log('Score du GM :', scoreValueGm);
+  }
+  //Check if something is suspicious in variables
+  if (scoreValue > 31) {
+    location.reload();
+  }
+  else if (maxScore > 21 && (GmHitRule == 17 || GmHitRule == 18)) {
+    location.reload();
+  }
+  //Win scenario if score value of the Gm is higher than maxScore value
+  else if (scoreValueGm > maxScore) {
+    WinScenario();
+  }
+  //Win scenario if score value of the player is higher than Gm score value
+  else if (scoreValue > scoreValueGm) {
+    WinScenario();
+  }
+  //Loose scenario if score value of the Gm is higher than player score value
+  else if (scoreValue < scoreValueGm) {
     LooseScenario();
   }
-  //Gm draw cards until get more score value than the GmHitRule value
-  else if (scoreValue >= scoreValueGm) {
-    while (scoreValueGm < GmHitRule) {
-      NewCardGm();
-      GmHandValue();
-      scoreGm.innerHTML = scoreValueGm;
-      //console infos
-      console.log('Cartes du GM : ',GmCards);
-      console.log('Score du GM :',scoreValueGm);
-    }
-    //Check if something is suspicious in variables
-    if (scoreValue > 31) {
-      location.reload();
-    }
-    else if (maxScore > 21 && (GmHitRule == 17||GmHitRule == 18)) {
-      location.reload();
-    }
-    //Win scenario if score value of the Gm is higher than maxScore value
-    else if (scoreValueGm > maxScore) {
-      WinScenario();
-    }
-    //Win scenario if score value of the player is higher than Gm score value
-    else if (scoreValue > scoreValueGm) {
-      WinScenario();
-    }
-    //Loose scenario if score value of the Gm is higher than player score value
-    else if (scoreValueGm > scoreValue) {
-      LooseScenario();
-    }
-    //Egality scenario if scores values are the same
-    else if (scoreValueGm == scoreValue) {
-      WinScenario();
-    }
-    //Error message if something goes wrong
-    else {
-      throw new Error('Une erreur a été produite dans la liste de conditions.');
-    }
+  //Egality scenario if scores values are the same
+  else if (scoreValue == scoreValueGm) {
+    WinScenario();
   }
-  else {
-    throw new Error('Une erreur a été produite dans la liste de conditions.');
-  }
+  //Error message if something goes wrong
+  else {throw new Error('Une erreur a été produite dans la liste de conditions.');}
 }
 
 
@@ -320,9 +312,7 @@ document.getElementById("31").addEventListener('change', function() {
     else {throw new Error('Une erreur a été produite dans la liste de conditions.');}
     console.log('Score max changé à ',maxScore);
   }
-  else {
-    throw new Error('Une erreur a été produite dans la liste de conditions.');
-  }
+  else {throw new Error('Une erreur a été produite dans la liste de conditions.');}
 })
 //hit on 17
 document.getElementById("hit17").addEventListener('change', function() {
@@ -334,7 +324,5 @@ document.getElementById("hit17").addEventListener('change', function() {
     GmHitRule = maxScore-4;
     console.log('Le Croupier tire à ',GmHitRule-1);
   }
-  else {
-    throw new Error('Une erreur a été produite dans la liste de conditions.');
-  }
+  else {throw new Error('Une erreur a été produite dans la liste de conditions.');}
 })
