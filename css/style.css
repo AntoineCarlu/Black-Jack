@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  width: auto;
+  height: 100vh;
+}
+
+header {
+  width: 100%;
+  height: 10vh;
+}
+
+/*Content in the table*/
+#table {
+  width: 100%;
+  height: 80vh;
+  position: relative;
+  background-image: url(img/BJ-Background-1.png);
+  background-size: cover;
+}
+  /*Series of div for score block*/
+  #table .scoreDiv {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    color: white;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  /*design of the score block*/
+  .scoreDiv .sd-c {
+    padding: 10px;
+    width: 225px;
+    height: auto;
+    border: 2px solid white;
+    border-top: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.25);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+    .sd-c div {
+      display: flex;
+      flex-direction: row;
+      gap: 5px;
+    }
+
+  /*Buttons to hit or stand on the table*/
+  #table .button-2 {
+    padding: 10px 0 10px 0;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    bottom: 0;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+    .button-2 button {
+      width: 125px;
+      height: 50px;
+      border: 2px solid;
+      border-radius: 5px;
+    }
+
+/*Win or loose message and reset button*/
+#reset {
+  width: 100%;
+  position: absolute;
+  top: 45%;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+/*Rules and settings block*/
+.rules {
+  padding-top: 100px;
+}

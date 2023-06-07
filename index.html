@@ -30,21 +30,26 @@
   <section>
     
     <!--Plateau-->
-    <div>
+    <div id="table">
       <!--Rules-->
-      <div>
+      <div class="rules">
         <p>Options et règles</p>
         <input id="31" type="checkbox"><label for="31">Score maximum à 31</label>
         <input id="hit17" type="checkbox"><label for="hit17">Le Croupier tire à 17</label>
       </div>
 
       <!--Score-->
-      <div class="scoreDiv" style="display: flex;align-items: center;gap: 5px;">
-        <p>Score Joueur :</p>
-        <span id="score"></span>
-        <br><br>
-        <p>Score Croupier : </p>
-        <span id="scoreGm"></span>
+      <div class="scoreDiv">
+        <div class="sd-c">
+          <div>
+            <p>Score Joueur :</p>
+            <span id="score"></span>
+          </div>
+          <div>
+            <p>Score Croupier : </p>
+            <span id="scoreGm"></span>
+          </div>
+        </div>
       </div>
       <!--Reset-->
       <div id="reset" style="display: flex;align-items: center;gap: 5px;">
@@ -60,8 +65,10 @@
         
       </div>
       <!--Boutons Partie-->
-      <button id="hit" type="button" disabled>Piocher une carte</button>
-      <button id="stand" type="button" disabled>Arrêter de piocher</button>
+      <div class="button-2">
+        <button id="hit" type="button" disabled>Piocher une carte</button>
+        <button id="stand" type="button" disabled>Arrêter de piocher</button>
+      </div>
     </div>
   
   </section>
