@@ -27,6 +27,9 @@ const buttonPlay = document.getElementById("play");
 const buttonBet = document.getElementById("bet");
 const buttonDraw = document.getElementById("hit");
 const buttonStop = document.getElementById("stand");
+const check31 = document.getElementById("31");
+const checkhit17 = document.getElementById("hit17");
+const check3for2 = document.getElementById("3for2");
 //Define value for each cards
 var CardsValues = {
   '2h': 2,'2d': 2,'2c': 2,'2s': 2,'3h': 3,'3d': 3,'3c': 3,'3s': 3,'4h': 4,'4d': 4,'4c': 4,'4s': 4,'5h': 5,'5d': 5,'5c': 5,'5s': 5,'6h': 6,'6d': 6,'6c': 6,'6s': 6,'7h': 7,'7d': 7,'7c': 7,'7s': 7,'8h': 8,'8d': 8,'8c': 8,'8s': 8,'9h': 9,'9d': 9,'9c': 9,'9s': 9,'10h': 10,'10d': 10,'10c': 10,'10s': 10,'Vh': 10,'Vd': 10,'Vc': 10,'Vs': 10,'Qh': 10,'Qd': 10,'Qc': 10,'Qs': 10,'Kh': 10,'Kd': 10,'Kc': 10,'Ks': 10,'1h': 11,'1d': 11,'1c': 11,'1s': 11,
@@ -109,6 +112,9 @@ function LooseScenario() {
     buttonReset.remove();
     //active button to play
     buttonPlay.disabled = false;
+    check31.disabled = false;
+    checkhit17.disabled = false;
+    check3for2.disabled = false;
   }
 }
 function WinScenario() {
@@ -146,6 +152,9 @@ function WinScenario() {
     buttonReset.remove();
     //active button to play
     buttonPlay.disabled = false;
+    check31.disabled = false;
+    checkhit17.disabled = false;
+    check3for2.disabled = false;
   }
 }
 
@@ -156,6 +165,9 @@ function PlayGame() {
     console.clear();
   buttonDraw.disabled = true;
   buttonStop.disabled = true;
+  check31.disabled = false;
+  checkhit17.disabled = false;
+  check3for2.disabled = false;
   //clear the cards, hands and score when start new game
   DefaultValues();
   //active buttons to bet
@@ -211,6 +223,9 @@ function BetCredits() {
       //active buttons to play
       buttonStop.disabled = false;
       buttonDraw.disabled = false;
+      check31.disabled = true;
+      checkhit17.disabled = true;
+      check3for2.disabled = true;
   
       //Give two random cards to the player and one to the GM
       NewCardPlayer();
@@ -353,9 +368,11 @@ var blackjackr = false;
 document.getElementById("3for2").addEventListener('change', function() {
   if (blackjackr === false) {
     blackjackr = true;
+    console.log('La règle "3 pour 2" a été activée, si le joueur gagne avec un Black Jack naturel, son gain sera augmenté.');
   }
   else if (blackjackr === true) {
     blackjackr = false;
+    console.log('La règle "3 pour 2" a été désactivée.');
   }
   else {throw new Error('Une erreur a été produite dans la liste de conditions.');}
 })
