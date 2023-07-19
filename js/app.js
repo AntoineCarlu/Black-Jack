@@ -125,6 +125,12 @@ function WinScenario() {
   else if (scoreValueGm > maxScore) {winText.textContent = "Vous avez gagné ! La main du Croupier est supérieur au score maximum ("+maxScore+")."; Credits = parseInt(Credits) + parseInt(actualBet);}
   else if (scoreValue == scoreValueGm) {winText.textContent = "Égalité ! La main du Croupier égalise votre main.";}
   else {winText.textContent = "Erreur";}
+  if (blackjackr === true) {
+    if (maxScore == 21 && scoreValue == 21 && scoreValueGm == 21 && PlayerCards.length == 2 && GmCards.length > 2) {winText.textContent = "Black Jack ! Vous avez gagné avec un Black Jack."; Credits = parseInt(Credits) + parseInt(actualBet)*1.5;} 
+    else if (maxScore == 31 && scoreValue == 31 && scoreValueGm == 31 && PlayerCards.length == 3 && GmCards.length > 3) {winText.textContent = "Black Jack ! Vous avez gagné avec un Black Jack."; Credits = parseInt(Credits) + parseInt(actualBet)*1.5;}
+    else if (maxScore == 21 && scoreValue == 21 && PlayerCards.length == 2 && scoreValueGm < 21) {winText.textContent = "Black Jack ! Vous avez gagné avec un Black Jack."; Credits = parseInt(Credits) + parseInt(actualBet)*0.5;}
+    else if (maxScore == 31 && scoreValue == 31 && PlayerCards.length == 3 && scoreValueGm < 21) {winText.textContent = "Black Jack ! Vous avez gagné avec un Black Jack."; Credits = parseInt(Credits) + parseInt(actualBet)*0.5;}
+  }
   buttonReset.textContent = "Rejouer";
   resetDiv.appendChild(winText);
   resetDiv.appendChild(buttonReset);
@@ -339,6 +345,17 @@ document.getElementById("hit17").addEventListener('change', function() {
   else if (GmHitRule == maxScore-3) {
     GmHitRule = maxScore-4;
     console.log('Le Croupier tire à ',GmHitRule-1);
+  }
+  else {throw new Error('Une erreur a été produite dans la liste de conditions.');}
+})
+//3 for 2 rule
+var blackjackr = false;
+document.getElementById("3for2").addEventListener('change', function() {
+  if (blackjackr === false) {
+    blackjackr = true;
+  }
+  else if (blackjackr === true) {
+    blackjackr = false;
   }
   else {throw new Error('Une erreur a été produite dans la liste de conditions.');}
 })
