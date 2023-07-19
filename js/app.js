@@ -261,39 +261,53 @@ function DrawGmCard() {
   buttonDraw.disabled = true;
   buttonStop.disabled = true;
   //Gm draw cards until get more score value than the GmHitRule value
-  while (scoreValueGm < GmHitRule) {
-    NewCardGm();
-    GmHandValue();
-    scoreGm.innerHTML = scoreValueGm;
-    //console infos
-    console.log('Cartes du GM : ', GmCards);
-    console.log('Score du GM :', scoreValueGm);
+  function GmDrawLoop() {
+    if (scoreValueGm < GmHitRule) {
+      NewCardGm();
+      GmHandValue();
+      scoreGm.innerHTML = scoreValueGm;
+      //console infos
+      console.log('Cartes du GM : ', GmCards);
+      console.log('Score du GM :', scoreValueGm);
+
+      //call function again after 2 seconds
+      setTimeout(GmDrawLoop, 2000);
+    }
+    else if (scoreValueGm >= GmHitRule) {
+      EndGameScenarios();
+    }
+    else {throw new Error('Une erreur a été produite dans la liste de conditions.');}
   }
-  //Check if something is suspicious in variables
-  if (scoreValue > 31) {
-    location.reload();
+  GmDrawLoop();
+
+  //Function to display loose or win scenarios etc..
+  function EndGameScenarios() {
+    //Check if something is suspicious in variables
+    if (scoreValue > 31) {
+      location.reload();
+    }
+    else if (maxScore > 21 && (GmHitRule == 17 || GmHitRule == 18)) {
+      location.reload();
+    }
+    //Win scenario if score value of the Gm is higher than maxScore value
+    else if (scoreValueGm > maxScore) {
+      WinScenario();
+    }
+    //Win scenario if score value of the player is higher than Gm score value
+    else if (scoreValue > scoreValueGm) {
+      WinScenario();
+    }
+    //Loose scenario if score value of the Gm is higher than player score value
+    else if (scoreValue < scoreValueGm) {
+      LooseScenario();
+    }
+    //Egality scenario if scores values are the same
+    else if (scoreValue == scoreValueGm) {
+      WinScenario();
+    }
+    //Error message if something goes wrong
+    else {throw new Error('Une erreur a été produite dans la liste de conditions.');}
   }
-  else if (maxScore > 21 && (GmHitRule == 17 || GmHitRule == 18)) {
-    location.reload();
-  }
-  //Win scenario if score value of the Gm is higher than maxScore value
-  else if (scoreValueGm > maxScore) {
-    WinScenario();
-  }
-  //Win scenario if score value of the player is higher than Gm score value
-  else if (scoreValue > scoreValueGm) {
-    WinScenario();
-  }
-  //Loose scenario if score value of the Gm is higher than player score value
-  else if (scoreValue < scoreValueGm) {
-    LooseScenario();
-  }
-  //Egality scenario if scores values are the same
-  else if (scoreValue == scoreValueGm) {
-    WinScenario();
-  }
-  //Error message if something goes wrong
-  else {throw new Error('Une erreur a été produite dans la liste de conditions.');}
 }
 
 
