@@ -128,8 +128,8 @@ function WinScenario() {
   if (blackjackr === true) {
     if (maxScore == 21 && scoreValue == 21 && scoreValueGm == 21 && PlayerCards.length == 2 && GmCards.length > 2) {winText.textContent = "Black Jack ! Vous avez gagné avec un Black Jack."; Credits = parseInt(Credits) + parseInt(actualBet)*1.5;} 
     else if (maxScore == 31 && scoreValue == 31 && scoreValueGm == 31 && PlayerCards.length == 3 && GmCards.length > 3) {winText.textContent = "Black Jack ! Vous avez gagné avec un Black Jack."; Credits = parseInt(Credits) + parseInt(actualBet)*1.5;}
-    else if (maxScore == 21 && scoreValue == 21 && PlayerCards.length == 2 && scoreValueGm < 21) {winText.textContent = "Black Jack ! Vous avez gagné avec un Black Jack."; Credits = parseInt(Credits) + parseInt(actualBet)*0.5;}
-    else if (maxScore == 31 && scoreValue == 31 && PlayerCards.length == 3 && scoreValueGm < 21) {winText.textContent = "Black Jack ! Vous avez gagné avec un Black Jack."; Credits = parseInt(Credits) + parseInt(actualBet)*0.5;}
+    else if (maxScore == 21 && scoreValue == 21 && PlayerCards.length == 2 && !(scoreValueGm == 21)) {winText.textContent = "Black Jack ! Vous avez gagné avec un Black Jack."; Credits = parseInt(Credits) + parseInt(actualBet)*0.5;}
+    else if (maxScore == 31 && scoreValue == 31 && PlayerCards.length == 3 && !(scoreValueGm == 21)) {winText.textContent = "Black Jack ! Vous avez gagné avec un Black Jack."; Credits = parseInt(Credits) + parseInt(actualBet)*0.5;}
   }
   buttonReset.textContent = "Rejouer";
   resetDiv.appendChild(winText);
